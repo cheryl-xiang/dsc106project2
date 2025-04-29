@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Project 2 Report</title>
+    <style>
+      :root {
+        --color-neutral-95: hsl(220 10% 95%);
+        --color-neutral-90: hsl(220 10% 90%);
+        --color-neutral-80: hsl(220 10% 80%);
+        --color-neutral-70: hsl(220 10% 70%);
+        --color-neutral-60: hsl(220 10% 60%);
+        --color-neutral-50: hsl(220 10% 50%);
+        --color-neutral-40: hsl(220 10% 40%);
+        --color-neutral-30: hsl(220 10% 30%);
+        --color-neutral-20: hsl(220 10% 20%);
+        --color-neutral-10: hsl(220 10% 10%);
+      }
+
+      html {
+        font: 100%/1.5 system-ui;
+        counter-reset: figure;
+        background: var(--color-neutral-95);
+        max-width: min(75vw, 80em);
+        margin: 0 auto;
+      }
+
+      /* Headings */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        line-height: 1.1;
+        font-weight: 600;
+        text-wrap: balance;
+      }
+
+      h1,
+      h2 {
+        border-bottom: 1px solid var(--color-neutral-80);
+        padding-bottom: 0.2em;
+      }
+
+      h1 {
+        margin-block: 1em 0.5rem;
+        font-size: clamp(2.5em, 150% + 2vh + 2vw, 10vmin);
+        font-weight: 800;
+
+        small {
+          display: block;
+          width: fit-content;
+          padding: 0.2em 0.5em;
+          margin-inline: auto;
+          color: white;
+          background: var(--color-neutral-40);
+          font-size: 40%;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+      }
+
+      h2 {
+        font-size: 180%;
+        color: var(--color-neutral-30);
+      }
+
+      h3 {
+        font-size: 130%;
+      }
+
+      /* Lists */
+
+      ul,
+      ol {
+        padding-inline-start: 2em;
+      }
+
+      li {
+        &::marker {
+          color: var(--color-neutral-40);
+        }
+
+        + li {
+          margin-top: 0.2em;
+        }
+      }
+
+      /* Sectioning elements */
+
+      header {
+        padding-block: 1em;
+        text-align: center;
+      }
+
+      main {
+        background: white;
+        color: var(--color-neutral-20);
+        border-radius: 1rem;
+        padding: 0.1rem 2rem;
+      }
+
+      /* Figures */
+
+      figure {
+        margin: 1em 0;
+        padding: 0.5rem;
+        margin-inline: -0.5em;
+        border: 1px solid var(--color-neutral-80);
+        box-shadow: 0 0.1em 0.2em var(--color-neutral-95);
+        text-align: center;
+        background: white;
+
+        > figcaption {
+          font: 500 75% var(--font-sans);
+          background: var(--color-neutral-95);
+          padding: 0.5rem;
+          margin: -0.5rem;
+          margin-top: 0.5rem;
+          counter-increment: figure;
+          text-align: left;
+
+          &::before {
+            content: 'Figure ' counter(figure) ': ';
+            font-weight: bold;
+            color: var(--color-neutral-40);
+          }
+
+          a:not(:hover, :focus, :active) {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: color-mix(
+              in lab,
+              currentColor,
+              transparent 70%
+            );
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>
+        <small>Intro to Data Visualization</small>
+        Persuasive or Deceptive Visualization?
+      </h1>
+
+      <p><strong>Cheryl Xiang</strong> — <em>c3xiang@ucsd.edu</em></p>
+    </header>
+
+    <main>
+      <h2>Proposition: Access to abortion clinics in the United States has declined in recent years.</h2>
+
+      <section>
+        <h3>FOR the Proposition</h3>
+
+        <figure>
+          <iframe src="propfinal.html" width="100%" height="600px" style="border:none;"></iframe>
+          <figcaption>Top 10 States With Largest Decreases in Counties with Abortion Clinics (2014–2020).</figcaption>
+        </figure>
+        
+
+        <p>Design Decisions and Rationale:</p>
+
+        <ul>
+          <li>Looking through the dataset, I realized that between 2014 and 2020, certain states had more extreme increases or 
+            decreases in percentages of counties without access to an abortion clinic. I also notice that there were metrics for both 
+            the difference in access between 2014 and 2020 as well as 2017 and 2020. The numbers of the first pair aligned better with 
+            my proposition, so I chose to focus on those data columns for this visualization. While this decision is not technically 
+            inaccurate since both timeframes are valid subsets of the original dataset, it could be considered mildly deceptive.
+            By selectively presenting the timeframe that produced stronger declines, I can influence viewers' perceptions by focusing 
+            on the most persuasive subset of available data. Furthermore, I cherry picked the states 
+            where the percent of counties <strong>without</strong> access to a known abortion clinic was <strong>greater</strong> 2020
+            than 2014. To find these specific 10 states, I calculated the difference between the 2020 and 2014 columns as a new column 
+            and sorted by that column, isolating the top 10 decreases. Choosing only these top extremes is not generally a good 
+            representation of the entire country, but by specifying that I am only including the top 10 for "clarity" I aim to make
+            this plot less deceptively obvious.</li>
+          <li>The original dataset provided numbers for the % of counties <strong>without</strong> known access to abortion clinics for 
+            2014 and 2020. To improve readability and more intuitively convey trends, I reversed the metric to show the percentage of 
+            counties <strong>with access</strong> instead. This allowed me to design the visualization such that a decrease in bar 
+            height from 2014 to 2020 signals a <strong>negative outcome</strong> (loss of access). Additionally, by coloring the 2020 
+            bars in red, a color conventionally associated with warning or decline, I reinforced the visual association between 
+            decreasing bar height, negative change, and undesirable outcomes. While these design choices do not alter or misrepresent 
+            the underlying data, they are intended to subtly influence viewers’ emotional perceptions. This approach could be considered 
+            to be mildly deceptive, particularly when compared to more neutral design strategies such as using a muted or neutral color 
+            palette.</li>
+          <li>Like my opposition graph, I considered using a simple bar chart with a single bar for each state showing just the 
+            <strong>percent change</strong> in counties with access to abortion clinics, but ultimately decided to use a grouped bar chart 
+            displaying both the 2014 and 2020 access percentages side by side for each state
+            instead to visually emphasize a consistent <strong>decrease</strong> where viewers can immediately see that the bar for 2020 is 
+            consistently shorter than the bar for 2014. Although a single-bar chart summarizing percent change would have been simpler, 
+            it would also require more mental effort from viewers to interpret. The grouped bars make the decline in access more <strong>visually intuitive</strong>, 
+            aligning the message of the graph with viewers’ immediate visual interpretation. I also observed that even within the top 10 states, 
+            some experienced relatively modest declines in access, with one state showing only an 8% change. A single bar chart would have 
+            drawn attention to the small magnitude of these changes, so
+            I opted for a grouped bar chart to divert viewers' attention to the existence of a decrease rather than the specific size of each decline.</li>
+          <li>Based on these design choices, I would give this visualization a deception score of <strong>deception score of -1</strong>. While my visualization 
+            choices did not directly alter raw data, they did selectively emphasize the strongest declines in access and use color and shape to influence 
+            emotional interpretation. Overall, I would consider this plot to be <strong>somewhat deceptive</strong></li>
+      </section>
+
+      <section>
+        <h3>AGAINST the Proposition</h3>
+
+        <figure>
+          <iframe src="oppfinal.html" width="100%" height="600px" style="border:none;"></iframe>
+          <figcaption>Top 10 States With Largest Gains in Abortion Clinics (2017–2020).</figcaption>
+        </figure>
+
+        <p>Design Decisions and Rationale:</p>
+
+        <ul>
+          <li>Similarly to the previous visualization, certain columnns from 2017 and 2020 were more strongly in support of the opposing 
+            claim, so I utilized those for this visualization. As stated previously, this could be considered mildly deceptive, as it somewhat 
+            obscures a subset of the raw data provided. The specific metric I used for this plot was the <strong>% change in the number of abortion 
+              clinics</strong> between 2017 and 2020 for each U.S. State. In order to find the data points that would be most convincing for arguing
+            against my proposition statement, I sorted this column in descending order to find the 10 states with the largest <strong>positive</strong> 
+            changes which would also be the 10 states with the largest <strong>increase</strong> in number of abortion clinics from 2017 to 2020. This is
+            another instance of cherry picking data. Unlike in the previous visualization, I did <strong>not clarify</strong> in the graph itself that 
+            only the top 10 states were being shown. As a result, this visualization is arguably more deceptive than the proposition side graph, 
+            as it may give viewers the impression that such increases were representative of national trends, rather than being exceptional cases. </li>
+          <li>To further the impression that the depicted increases in abortion clinic numbers were broadly representative of national trends, I mapped each state
+            to its U.S. Census region and included the region name alongside each state on the x-axis. The top 10 states included states from 
+            the South, Midwest, and West. This design choice subtly encourages viewers to interpret the improvements as <strong>regionally widespread</strong> rather 
+            than isolated to a few outliers. Even though only 10 states were shown, the fact that they spanned multiple regions visually reinforced the 
+            idea of a nationwide trend. Additionally, the presence of several states from the South and Midwest —regions typically perceived as more politically 
+            conservative— helped make the visualization more convincing by highlighting gains in areas where viewers' might expect a decline in access to abortion,
+            making the depicted trend feel more significant and credible. Furthermore, I chose the title "Gains in Abortion Clinic Access Across Regions (2017–2020)," 
+            with a smaller subtitle clarifying that the South, Midwest, and West were represented while the Northeast was not. This title was used to frame my 
+            visualization as a story of regional leadership in positive change while acknowledging the absence of any states from the Northeast. The Northeast is traditionally
+            considered to be more politically liberal and already maintained relatively high levels of access prior to 2017, so its absence from the largest 
+            increases should not particularly surprising to viewers, so a simple acknowledgement of this fact can help dissuade any suspicion regarding the credibility of 
+            this visualization.
+          </li>
+          <li>For the opposition visualization, I decided that a simple bar chart displaying the percent change in the number of clinics for each state would be an 
+            effective design choice. Unlike in the proposition side where I wanteded to emphasize a directional decrease (by using a grouped bar chart), here my focus was on 
+            highlighting positive improvements without creating extra visual complexity. I chose a <strong>blue color palette</strong> for this visualization because it is often perceived as a 
+            <strong>neutral or calming</strong> color. This helped reinforce the message that the increases in clinic access were optimistic developments. Within the palette, I used a 
+            gradient based on percent increase and assigned darker shades of blue to states with larger gains to highlight them without using additional annotations or disrupting the 
+            overall harmony of the design by adding visual clutter. Using lighter shades of blue for states with less drastic increases also helps de-emphasize smaller improvements while 
+            naturally drawing the viewer’s attention toward states with larger gains.</li>
+          <li>ased on these design choices, I would give this visualization a deception score of <strong>deception score of -1.5</strong>. While my visualization 
+            choices did not directly alter raw data, they did focus on the top 10 states with the largest increases, without clearly indicating that limitation in the
+            graph itself. I also used colors and the addition of regions to create a stronger optimistic viewer perspective. Overall, I would consider this plot to be <strong>deceptive</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Final Reflection</h2>
+
+        <p>Throughout this process, I learned a lot about how subtle design choices can significantly influence how the data you present in interpreted. While I have come
+          across plenty of data visualizations in my everyday life, I don't often stop to consider how I could be being subconciously infleunced by the creator's visualization
+          choices. I was surprised by how much changed small aspects of a graph such as colors or titles/subtitles could change the story presented by the underlying data. Some 
+          aspects of the project were more straightforward, such as choosing chart types and color palettes, while others proved to be more difficult (deciding on chart titles, finding the 
+          most suitable data points, making any deceptive tactics used less obvious) I also had access to multiple timeframes and metrics for both the proposition and opposition 
+          views, which meant that simply choosing what data to highlight already involved a degree of subjectivity.
+        </p>
+        <p>Regarding “ethical analysis and visualization”, I would define this concept to more of a spectrum rather than a binary definition of "ethical" or "inethical." A visualization can be 
+          factually accurate and still be misleading if it emphasizes certain patterns, omits context, or guides emotion through color and layout. I also believe there exists a level of 
+          subjectivity when it comes to deciding whether these design choices are considered "ethical analysis." There are also levels of deception within these visual choices. For instance, 
+          showing only the top 10 states with the biggest increases is not necessarily inethical if clearly stated, but omitting that clarification makes the visualization more 
+          deceptively persuasive. In some cases, even raw data itself can be misleading to some viewers. In the case of this particular project, 
+          declines and increases to abortion clinic access were given in percentages without any information on specific numbers. This means that if a state changed from no abortion clinics to one 
+          abortion clinic, it would be considered a 100% increase in access. Without context on the absolute number of clinics, 
+          viewers might overestimate the significance of certain changes, even if the percentage growth seems dramatic. Another limitation of the dataset is that it defines access at the state level, 
+          without adjusting for important contextual factors like state size or population density. This means that the data does not necessarily reflect meaningful improvements or declines in access 
+          for individual residents. For example, a state opening a new clinic might dramatically improve access in a small, densely populated state, but make very little difference in a large, rural 
+          state where travel distances remain high. From this project, I have come to realize how important transparency withinin your visualizations is when it comes to maintaining ethical analysis
+          and visualization practices.
+        </p>
+        <p>
+          I would draw the line between “acceptable” persuasion and “misleading” design based on viewer awareness and data integrity. If the viewer is reasonably informed about the 
+          scope and framing of the data, and the visualization does not distort the underlying data itself, I would consider the design ethically acceptable for most cases. 
+          But when design choices intentionally or unintentionally obscure key limitations (like only showing outliers or disregarding missing data) without clear context, 
+          the visualization crosses the line into being misleading. Small decisions such as claiming that states were ommitted for "clarity" rather than because they did not 
+          support the proposition can be considered to be somewhat misleading. 
+          This project has shown me that persuasive visualization is not inherently unethical, but it requires intentional reflection and respect for the viewer’s ability to interpret honestly.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
